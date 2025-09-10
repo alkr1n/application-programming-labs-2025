@@ -19,6 +19,7 @@ def openfile()->list[str]:
     text = file.read()
     file.close()
     return text
+
 def get_full_records_by_name(name:str)->list[str]:
     """
     Функция для проверки анкет по имени
@@ -49,3 +50,26 @@ def get_full_records_by_name(name:str)->list[str]:
                     found_records.append(record)
                     break
     return found_records  
+
+def main()->None:
+    """
+    главная функция которая управляет кодом
+    нужна для запроса имени,вывода количества анкет и дальнешей записи в файл
+    """
+    name=input('введите нужное имя:')
+    name=name.lower()
+    good=get_full_records_by_name(name)
+    total=len(good)
+    print('Людей с именем ',name,'найдено ',total,'человек')
+    try:
+      file = open('data1.txt', 'w', encoding='utf-8')
+    except FileNotFoundError as exs:
+        print(f"Error: {exs}")
+        return None
+        
+    for goodname in good:
+        file.write(goodname + '\n\n')
+    
+    
+if __name__ == "__main__":
+    main()
